@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>We are learning django here!</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block content %} <!-- content is a variable, i can change that no problem-->
+        replace me
+    {% endblock %}
+</body>
+</html>

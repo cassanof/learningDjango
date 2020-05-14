@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>About Page</h1>
+    <p>Templating!</p>
+
+    <p>
+    {{ my_text }}
+    {{ my_number }} is a number we like, we also like these numbers: {{ my_list }}<br>
+    in a better format:
+    </p>
+    <ul>
+    {% for my_sub_item in my_list %}
+        <li>{{ forloop.counter }} - {{ my_sub_item }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
