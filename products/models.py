@@ -7,5 +7,5 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True)
     # blank means mot required, null means it can be blank in the database
     price = models.DecimalField(decimal_places=2, max_digits=10000)
-    summary = models.TextField()
-    featured = models.BooleanField()
+    summary = models.TextField(blank=False, null=False)
+    featured = models.BooleanField(default=True)
