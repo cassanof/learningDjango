@@ -16,6 +16,7 @@ def contact_view(request, *args, **kwargs):
 
 def about_view(request, *args, **kwargs):
     my_context = {
+        "my_html": "<h1>Render me with safe to use the tags!</h1>",
         "my_text": "This is about us",
         "my_number": 123,
         "my_list": [543, 5467, 122, "five"],
