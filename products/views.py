@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 
 from .models import Product
 from .forms import ProductForm, RawProductForm
@@ -6,23 +7,67 @@ from .forms import ProductForm, RawProductForm
 
 # Create your views here.
 
-# Raw form
-def product_create_view(request):
-    rawForm = RawProductForm()  # Rendering the form (aka instancing from Python)
-    if request.method == "POST":
-        rawForm = RawProductForm(request.POST)  # Rendering the post of the form
-        if rawForm.is_valid():
-            print(rawForm.cleaned_data)
-        else:
-            print(rawForm.errors)
+def dynamic_lookup_view(request, URLid):  # URLid comes from urls.py
+    # obj = Product.objects.get(id=URLid)
+    # obj = get_object_or_404(Product, id=URLid)
+    try:
+        obj = Product.objects.get(id=URLid)
+    except Product.DoesNotExist:
+        raise Http404
+    
+    context = {
+        "object": obj
+    }
+    return render(request, "products/product_details.html", context)
+
+
+# Change a product, with initial data
+def render_initial_data(request):
+    initial_data = {
+        'title': "A initial title!"
+    }
+
+    obj = Product.objects.get(id=1)
+    form = ProductForm(request.POST or None, initial=initial_data, instance=obj)
+    if form.is_valid():
+        form.save()
 
     context = {
-        "form": rawForm
+        'form': form
     }
     return render(request, "products/product_create.html", context)
 
 
-# Processing the requests directly
+# Model form
+def product_create_view(request):
+    form = ProductForm(request.POST or None)  # if POST comes true it renders it
+    if form.is_valid():
+        form.save()
+        form = ProductForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, "products/product_create.html", context)
+
+
+# Raw form
+# def product_create_view(request):
+#     rawForm = RawProductForm()  # Rendering the form (aka instancing from Python)
+#     if request.method == "POST":
+#         rawForm = RawProductForm(request.POST)  # Rendering the post of the form
+#         if rawForm.is_valid():
+#             print(rawForm.cleaned_data)
+#         else:
+#             print(rawForm.errors)
+#
+#     context = {
+#         "form": rawForm
+#     }
+#     return render(request, "products/product_create.html", context)
+
+
+# Processing the requests directly w/o form
 # def product_create_view(request):
 #     # print(request.POST)
 #     # print(request.GET)
@@ -32,19 +77,6 @@ def product_create_view(request):
 #         # Product.objects.create(title=titleGot)
 #     context = {}
 #     return render(request, "products/product_create.html", context)
-
-# Model form
-# def product_create_view(request):
-#     form = ProductForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         form = ProductForm()
-#
-#     context = {
-#         'form': form
-#     }
-#     return render(request, "products/product_create.html", context)
-
 
 def product_detal_view(request):
     obj = Product.objects.get(id=1)
