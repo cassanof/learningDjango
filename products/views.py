@@ -2,10 +2,19 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 from .models import Product
-from .forms import ProductForm, RawProductForm
+from .forms import ProductForm, RawProductForm, ProductNiceForm
 
 
 # Create your views here.
+
+def product_delete_view(request, URLid):
+    obj = get_object_or_404(Product, id=URLid)
+    # obj.delete()
+    context = {
+        "object": obj
+    }
+    return render(request, "products/product_delete.html", context)
+
 
 def dynamic_lookup_view(request, URLid):  # URLid comes from urls.py
     # obj = Product.objects.get(id=URLid)
@@ -14,7 +23,7 @@ def dynamic_lookup_view(request, URLid):  # URLid comes from urls.py
         obj = Product.objects.get(id=URLid)
     except Product.DoesNotExist:
         raise Http404
-    
+
     context = {
         "object": obj
     }
@@ -49,6 +58,18 @@ def product_create_view(request):
         'form': form
     }
     return render(request, "products/product_create.html", context)
+
+
+def product_nice_create_view(request):
+    form = ProductNiceForm(request.POST or None)  # if POST comes true it renders it
+    if form.is_valid():
+        form.save()
+        form = ProductNiceForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, "products/product_nice_create.html", context)
 
 
 # Raw form

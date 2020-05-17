@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Nicer Product Create Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nicecreateForm.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nicecreateFormPopup.css' %}"/>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+<div class="box">
+    <h2>Create Product</h2>
+    <form method="POST"> {% csrf_token %}
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div class="" role="alert">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {#    TITLE BLOCK    #}
+        <div>
+            {{ form.title }}
+            <label for="{{ form.title.id_for_label }}" class="label-name">
+                Title
+            </label>
+            <div class="popup">
+                <span class="popuptext" id="titlePopup">
+                    {% if form.title.errors %}
+                        {% for error in form.title.errors %}
+                            {{ error|escape }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        {#    DESCRIPTION BLOCK    #}
+        <div>
+            {{ form.description }}
+            <label for="{{ form.description.id_for_label }}" class="label-name">
+                Description
+            </label>
+            <div class="popup">
+                <span class="popuptext" id="descPopup">
+                    {% if form.description.errors %}
+                        {% for error in form.description.errors %}
+                            {{ error|escape }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+            {#    PRICE BLOCK    #}
+        <div>
+            {{ form.price }}
+            <label for="{{ form.price.id_for_label }}" class="label-name">
+                Price
+            </label>
+            <div class="popup">
+                <span class="popuptext" id="pricePopup">
+                    {% if form.price.errors %}
+                        {% for error in form.price.errors %}
+                            {{ error|escape }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <input type="submit" value="Save" id="bottone"/>
+    </form>
+</div>
+    <script>
+            {% if form.title.errors %}
+                let titlePopup = document.getElementById("titlePopup");
+                titlePopup.classList.toggle("show");
+            {% endif %}
+
+            {% if form.description.errors %}
+                let descPopup = document.getElementById("descPopup");
+                descPopup.classList.toggle("show");
+            {% endif %}
+
+            {% if form.price.errors %}
+                let pricePopup = document.getElementById("pricePopup");
+                pricePopup.classList.toggle("show");
+            {% endif %}
+    </script>
+</body>
+{% endblock %}

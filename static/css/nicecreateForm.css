@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: lightblue no-repeat;
+    background-size: cover;
+}
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: 400px;
+    padding: 40px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,.1);
+    box-shadow: 0 5px rgba(0,0,0,.2);
+}
+
+.box h2 {
+    margin: 0 0 40px;
+    padding: 0;
+    color: #4974f7;
+    text-transform: uppercase;
+}
+
+.box input {
+    padding: 10px 0;
+    margin-bottom: 30px;
+}
+
+.box textarea {
+    height: 180px;
+    padding: 10px 0;
+    margin-bottom: 40px;
+    font-family: sans-serif;
+    resize: none;
+    margin-bottom: 25px;
+}
+
+.box textarea, .box input {
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #999;
+}
+
+.box input[type=submit] {
+    border-bottom: none;
+    cursor: pointer;
+    background: #4974f7;
+    color: #fff;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.box form div {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.box form div label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: #999;
+    transition: .5s cubic-bezier(1, -0.49, 0.25, 1);
+    pointer-events: none;
+
+}
+
+
+/*do stuff only to the label*/
+.box input:focus ~ label,
+.box textarea:focus ~ label,
+form input:not(:placeholder-shown) ~ label,
+form textarea:not(:placeholder-shown) ~ label{
+    top: -12px;
+    color: #4974f7;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.box input:focus,
+.box textarea:focus,
+form input:not(:placeholder-shown),
+form textarea:not(:placeholder-shown){
+    transition: 1s ease;
+    border-bottom: 2px solid #4974f7;
+}
