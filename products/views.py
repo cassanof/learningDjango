@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Product
 from .forms import ProductForm, RawProductForm, ProductNiceForm
@@ -7,9 +7,22 @@ from .forms import ProductForm, RawProductForm, ProductNiceForm
 
 # Create your views here.
 
+def product_list_view(request):
+    queryset = Product.objects.all()
+    context = {
+        "object_list": queryset
+    }
+    return render(request, "products/product_list.html", context)
+
+
 def product_delete_view(request, URLid):
     obj = get_object_or_404(Product, id=URLid)
-    # obj.delete()
+
+    if request.method == "POST":
+        # confirming delete
+        obj.delete()
+        return redirect('/')
+
     context = {
         "object": obj
     }
@@ -99,7 +112,7 @@ def product_nice_create_view(request):
 #     context = {}
 #     return render(request, "products/product_create.html", context)
 
-def product_detal_view(request):
+def product_detail_view(request):
     obj = Product.objects.get(id=1)
     context = {
         # 'title': obj.title,

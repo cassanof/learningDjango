@@ -14,7 +14,7 @@
 <body>
 {% block content %}
 <div class="box">
-    <h2>Create Product</h2>
+    <h2>Create Review</h2>
     <form method="POST"> {% csrf_token %}
         {% for hidden_field in form.hidden_fields %}
             {{ hidden_field }}

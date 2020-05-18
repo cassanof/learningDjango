@@ -1,9 +1,9 @@
 <nav>
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'product' %}">Product</a></li>
-        <li><a href="{% url 'create' %}">Create Product</a></li>
-        <li><a href="{% url 'nice_create' %}">Create Nice Product</a></li>
+        <li><a href="{% url 'products:list' %}">Products List</a></li>
+        <li><a href="{% url 'products:create' %}">Create Product</a></li>
+        <li><a href="{% url 'products:nice_create' %}">Create Nice Product</a></li>
         <li><a href="{% url 'contact' %}">Contact</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
     </ul>
